@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: netwatch_db
+    environment:
+      POSTGRES_USER: netwatch_user
+      POSTGRES_PASSWORD: netwatch_password
+      POSTGRES_DB: netwatch
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: netwatch_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_SERVER=db
+      - POSTGRES_USER=netwatch_user
+      - POSTGRES_PASSWORD=netwatch_password
+      - POSTGRES_DB=netwatch
+    volumes:
+      - ./ml_pipeline:/ml_pipeline
+
+  frontend:
+    build: ./frontend
+    container_name: netwatch_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

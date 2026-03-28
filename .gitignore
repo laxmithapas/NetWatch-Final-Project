@@ -1,0 +1,32 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+
+# Node / React
+node_modules/
+dist/
+.npm/
+
+# Logs and DB
+*.log
+*.sqlite
+netwatch.db
+postgres_data/
+
+# Machine Learning generated files
+ml_pipeline/models/*.pkl
+ml_pipeline/plots/*.png
+mlruns/
+ml_pipeline/sample_dataset.csv
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
